@@ -1,20 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="assets/reset.css">
     <link rel="stylesheet" type="text/css" href="assets/style.css">
 
-
-    <title>Psychic-Game</title>
+    <title>Psychic Game</title>
 </head>
 
 <body>
-    <script type="text/javascript" src="assets/game.js">
+
+    <div id="game">
+        <h3>Guess What Letter I'm thinking of ?</h3>
+        <p>Press any letter to start playing!</p>
+        <p>Wins: </p>
+        <p>Losses: </p>
+        <p> Guesses Left: </p>
+        <p>Your Guesses so Far:</p>
+
+    </div>
+
+    <script type="text/javascript">
+        // Creates an array that lists out all of the options (Rock, Paper, or Scissors).
+        var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "l", "m", "n", "p", "q", "r", "t", "v", "x", "z"];
+        var wins = 0;
+        var losses = 0;
+        var guessesLeft = 10;
+        var guesssSoFar = [];
+
+
+        // This function is run whenever the user presses a key.
+        document.onkeyup = function(event) {
+
+            // Determines which key was pressed.
+            var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+
+
+            // Randomly chooses a choice from the options array. This is the Computer's guess.
+
+            var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+            guesssSoFar.push(userGuess);
+
+
+            // This logic determines the outcome of the game (win/loss/tie), and increments the appropriate number
+
+            if (userGuess == computerGuess) {
+
+                wins++;
+                alert("Congratulation!! You Win");
+                guessesLeft = 9;
+                guesssSoFar.length = 0;
+
+
+            } else if (guessesLeft == 0) {
+                losses++;
+                alert('You didn\'t guess the correct letter. You lost. Let\'s try again.');
+                guessesLeft = 9;
+                guesssSoFar.length = 0;
+            } else if (userGuess !== computerGuess) {
+                guessesLeft--;
+            }
+            // Creating a variable to hold our new HTML. Our HTML now keeps track of the user and computer guesses, and wins/losses/ties.
+            var html = "<h3>Guess What Letter I'm thinking of ?</h3>" +
+                "<h3>Press any letter to start playing!</h3>" +
+                "<p>Wins: " + wins + "</p>" +
+                "<p>losses: " + losses + "</p>" +
+                "<p>Guesses Left: " + wins + "</p>" +
+                "<p>Your Guesses so far: " + guesssSoFar + "</p>";
+
+            // Set the inner HTML contents of the #game div to our html string
+            document.querySelector("#game").innerHTML = html;
+
+
+        }
     </script>
+
 </body>
 
 </html>
